@@ -316,7 +316,7 @@ def build_home():
     body = f"""
 <section class="hero" aria-label="Introduction">
   <h1 class="sr-only">{e(SITE["name"])} — {t(IDENTITY["title"])}, {t(IDENTITY["degree"])}. {t(IDENTITY["based"])} {t(IDENTITY["country"])}</h1>
-  <div class="hero__portrait"><img src="{portrait(p)}" alt="Portrait of {a(SITE['name'])}" width="1000" height="1100" fetchpriority="high"></div>
+  <div class="hero__portrait"><img src="{portrait(p)}" alt="Portrait of {a(SITE['name'])}" width="887" height="1200" fetchpriority="high"></div>
   <div class="hero__badgeWrap"><div class="magnetic"><div class="hero__badge">
     <p class="hero__badgeText" aria-hidden="true">{t(IDENTITY["based"])}<br>{t(IDENTITY["country"])}</p>
     <span class="hero__globe" aria-hidden="true"><span class="hero__globeDisc">{GLOBE}</span></span>
@@ -456,7 +456,7 @@ def build_about():
   <div class="about__divider"><div class="about__globe" data-parallax="-0.08"><span class="hero__globeDisc about__globeDisc">{GLOBE}</span></div></div>
   <div class="about__grid">
     <div class="about__text"><span class="about__arrow">{ARROW_DOWN}</span>{paras}{resume}</div>
-    <div class="about__portrait reveal"><img src="{portrait(p)}" alt="Portrait of {a(SITE['name'])}" width="1000" height="1100" loading="lazy"></div>
+    <div class="about__portrait reveal"><img src="{portrait(p)}" alt="Portrait of {a(SITE['name'])}" width="887" height="1200" loading="lazy"></div>
   </div>
 </section>
 <section class="skills">

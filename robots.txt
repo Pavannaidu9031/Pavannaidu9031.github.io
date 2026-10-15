@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://pavannaidu9031.github.io/portfolio/sitemap.xml
+Sitemap: https://pavannaidu9031.github.io/sitemap.xml

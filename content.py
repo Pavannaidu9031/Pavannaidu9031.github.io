@@ -11,15 +11,15 @@ def T(en, zh):
 SITE = {
     # Full public address of the site (used for Open Graph link previews).
     # If the repo is named  Pavannaidu9031.github.io  this becomes https://pavannaidu9031.github.io/
-    "url": "https://pavannaidu9031.github.io/portfolio/",
+    "url": "https://pavannaidu9031.github.io/",
     "name": "Pavan Kalyan",
     "short": "Pavan",
     "email": "pavankalyannaidu722@gmail.com",
     "linkedin": "https://www.linkedin.com/in/pavankalyan9031",
     "github": "https://github.com/Pavannaidu9031",
     "resume": "",           # TODO put the PDF in assets/ and write e.g. "assets/Pavan-Kalyan-Resume.pdf"
-    "portrait": "",         # TODO put a cut-out portrait (transparent background) in assets/img/ and write e.g. "assets/img/portrait.webp"
-    "portrait_circle": "",  # optional square photo for the round footer avatar; falls back to the portrait
+    "portrait": "assets/img/portrait.webp",  # cut-out made by tools/cutout.py
+    "portrait_circle": "assets/img/avatar.webp",
     "timezone": "Asia/Taipei",
     "edition": "2026",
 }
@@ -90,12 +90,13 @@ PROJECTS = [
             "一個以機器學習為導向的網頁應用，根據實驗歷史建議薄膜濺鍍參數，具備實驗紀錄簿、文獻 PDF 解析，以及多材料追蹤（WO₃、Pd、ITO）。我開發它，是為了縮短自己鍍膜實驗中反覆試誤的循環。",
         ),
         "highlights": [
-            T("Suggests sputtering parameters learned from past runs", "從過去的實驗中學習並建議濺鍍參數"),
+            T("Bayesian optimization: a Gaussian process model with an acquisition function that balances several process goals at once", "貝氏最佳化：以高斯過程模型搭配採集函數，同時兼顧多個製程目標"),
+            T("Cuts the sputtering runs needed from 72 to an estimated 15–20", "將所需的濺鍍實驗次數從 72 次減少到預估 15–20 次"),
             T("Experiment ledger that keeps every deposition and its result", "實驗紀錄簿，保存每一次鍍膜與其結果"),
             T("Parses literature PDFs into comparable process data", "解析文獻 PDF，整理成可比較的製程資料"),
             T("Separate tracks for WO₃, Pd and ITO", "WO₃、Pd、ITO 各自獨立的材料追蹤"),
         ],
-        "stack": ["Python", "FastAPI", "scikit-learn", "Supabase", "Render"],
+        "stack": ["Python", "FastAPI", "scikit-learn", "Gaussian processes", "PostgreSQL / Supabase", "Render"],
         "links": [
             {"label": T("Live site", "線上網站"), "url": "https://rock-ai-optimizer.onrender.com"},
             {"label": T("Source code", "原始碼"), "url": "https://github.com/Pavannaidu9031/matrix-ai-optimizer"},
@@ -176,6 +177,10 @@ ABOUT = {
             "Outside the lab I'm an English Language Teaching Assistant (ELTA) in Taiwan, creating bilingual English/Chinese lessons for elementary students.",
             "實驗室之外，我在台灣擔任英語教學助理（ELTA），為國小學生設計中英雙語課程。",
         ),
+        T(
+            "I'm looking for a process or equipment engineering internship, or a full-time role after I graduate in June 2027.",
+            "我正在尋找製程或設備工程的實習機會，以及 2027 年 6 月畢業後的正職工作。",
+        ),
     ],
     "skills": [
         {
@@ -185,19 +190,23 @@ ABOUT = {
                 T("Fiber etching", "光纖蝕刻"),
                 T("Thin-film deposition", "薄膜沉積"),
                 T("Optical power measurement", "光功率量測"),
+                T("CMOS fabrication, photolithography (coursework)", "CMOS 製程、微影（課程）"),
             ],
         },
         {
-            "title": T("Characterization", "材料分析"),
+            "title": T("Characterization & analysis", "材料分析與數據"),
             "items": [
                 T("Microscopy", "顯微鏡觀察"),
                 T("XRD (via NCKU facility)", "X 光繞射 XRD（成大貴儀中心）"),
+                T("SPC, DOE", "統計製程管制（SPC）、實驗設計（DOE）"),
+                T("JMP, Minitab", "JMP、Minitab"),
+                T("TCAD (Sentaurus)", "TCAD（Sentaurus）"),
             ],
         },
         {
             "title": T("Software", "軟體"),
             "items": [
-                T("Python", "Python"),
+                T("Python, C, SQL, MATLAB", "Python、C、SQL、MATLAB"),
                 T("FastAPI", "FastAPI"),
                 T("scikit-learn", "scikit-learn"),
                 T("Supabase", "Supabase"),
@@ -210,12 +219,12 @@ ABOUT = {
         {
             "what": T("MS, Electrical Engineering", "電機工程碩士"),
             "where": T("Southern Taiwan University of Science and Technology", "南臺科技大學"),
-            "when": T("Expected June 2027", "預計 2027 年 6 月畢業"),
+            "when": T("2025 – June 2027 (expected)", "2025 – 2027 年 6 月（預計）"),
         },
         {
             "what": T("B.Tech, Electronics & Communication Engineering", "電子與通訊工程學士（B.Tech）"),
-            "where": T("", ""),   # TODO college name
-            "when": T("", ""),    # TODO year
+            "where": T("Sri Venkatesa Perumal College of Engineering and Technology · First Class", "Sri Venkatesa Perumal 工程技術學院・一等學位"),
+            "when": T("2019 – 2023", "2019 – 2023"),
         },
     ],
     "experience": [
@@ -225,9 +234,9 @@ ABOUT = {
             "when": T("Now", "現在"),
         },
         {
-            "what": T("Software Engineer", "軟體工程師"),
-            "where": T("", ""),   # TODO company
-            "when": T("", ""),    # TODO years, e.g. "2021 – 2024"
+            "what": T("Junior Software Engineer", "初級軟體工程師"),
+            "where": T("Trinite Digital, Pondicherry, India", "Trinite Digital（印度本地治里）"),
+            "when": T("", ""),    # TODO years, e.g. "2023 – 2025"
         },
     ],
     "interests": [
