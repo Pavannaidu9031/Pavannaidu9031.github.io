@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" font-family="Inter, Helvetica Neue, Arial, sans-serif"><rect x="40" y="40" width="720" height="520" rx="18" fill="#f3eff6"/>
+<rect x="80" y="250" width="130" height="90" rx="12" fill="#3b2f4a"/>
+<rect x="600" y="250" width="130" height="90" rx="12" fill="#3b2f4a"/>
+<rect x="620" y="272" width="90" height="30" rx="4" fill="#c9f2d0"/>
+<path d="M210 295 C260 295 270 400 330 400 H470 C530 400 540 295 600 295" stroke="#7d8db3" stroke-width="6" fill="none"/>
+<path d="M210 295 C260 295 270 400 330 400 H470 C530 400 540 295 600 295" stroke="#e5484d" stroke-width="2" fill="none" stroke-dasharray="10 8"/>
+<rect x="300" y="360" width="200" height="80" rx="10" fill="#c9b8e6" opacity=".85"/>
+<rect x="290" y="450" width="220" height="26" rx="6" fill="#3b2f4a"/>
+<text x="80" y="100" font-size="26" fill="#1c1d20" text-anchor="start" font-weight="500" opacity="1">Etch and measure</text><text x="80" y="132" font-size="17" fill="#5b6070" text-anchor="start" font-weight="400" opacity="1">Optical power is logged while the fiber sits in the heated bath</text><text x="145" y="300" font-size="16" fill="#fff" text-anchor="middle" font-weight="500" opacity="1">Laser</text><text x="145" y="322" font-size="13" fill="#ffffffbb" text-anchor="middle" font-weight="400" opacity="1">1310 nm</text><text x="665" y="293" font-size="14" fill="#1c1d20" text-anchor="middle" font-weight="500" opacity="1">dBm</text><text x="665" y="328" font-size="13" fill="#ffffffbb" text-anchor="middle" font-weight="400" opacity="1">Power meter</text><text x="400" y="408" font-size="15" fill="#3b2f4a" text-anchor="middle" font-weight="500" opacity="1">HF bath</text><text x="400" y="468" font-size="13" fill="#fff" text-anchor="middle" font-weight="400" opacity="1">hot plate · 60–110 °C</text></svg>

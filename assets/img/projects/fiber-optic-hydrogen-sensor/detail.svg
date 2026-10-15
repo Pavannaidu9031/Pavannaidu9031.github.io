@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" font-family="Inter, Helvetica Neue, Arial, sans-serif"><rect x="40" y="40" width="720" height="520" rx="18" fill="#eef1f7"/>
+<rect x="110" y="120" width="220" height="50" rx="8" fill="#55607a"/>
+<rect x="110" y="120" width="220" height="50" rx="8" fill="none" stroke="#2c3346" stroke-width="3"/>
+<rect x="470" y="120" width="220" height="50" rx="8" fill="#9aa1ad"/>
+<rect x="470" y="120" width="220" height="50" rx="8" fill="none" stroke="#2c3346" stroke-width="3"/>
+<path d="M220 176 Q240 240 330 300 M580 176 Q560 240 470 300" stroke="#b58cff" stroke-width="4" fill="none" stroke-dasharray="2 9" stroke-linecap="round"/>
+<circle cx="400" cy="380" r="120" fill="#c4ccde"/>
+<circle cx="400" cy="380" r="88" fill="#6f7380"/>
+<circle cx="400" cy="380" r="76" fill="#e6c34a"/>
+<circle cx="400" cy="380" r="56" fill="#c4ccde"/>
+<circle cx="400" cy="380" r="18" fill="#7d8db3"/>
+<path d="M400 290 A90 90 0 0 1 488 372" stroke="#1c1d20" stroke-width="2" fill="none" stroke-dasharray="3 5"/>
+<text x="220" y="152" font-size="18" fill="#fff" text-anchor="middle" font-weight="500" opacity="1">WO₃ · RF</text><text x="580" y="152" font-size="18" fill="#1c1d20" text-anchor="middle" font-weight="500" opacity="1">Pd · DC</text><text x="80" y="84" font-size="22" fill="#1c1d20" text-anchor="start" font-weight="500" opacity="1">Ring coating around the fiber</text><text x="540" y="470" font-size="16" fill="#1c1d20" text-anchor="start" font-weight="500" opacity="1">Pd</text><text x="540" y="498" font-size="16" fill="#1c1d20" text-anchor="start" font-weight="500" opacity="1">WO₃</text><text x="540" y="526" font-size="16" fill="#5b6070" text-anchor="start" font-weight="400" opacity="1">etched fiber</text><text x="400" y="386" font-size="13" fill="#fff" text-anchor="middle" font-weight="500" opacity="1">core</text></svg>
