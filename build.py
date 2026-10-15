@@ -14,7 +14,7 @@ from urllib.parse import urlparse, quote
 from content import SITE, IDENTITY, PROJECTS, ABOUT, T
 
 ROOT = Path(__file__).parent
-VERSION = "6"  # bump to bust browser caches of css/js
+VERSION = "7"  # bump to bust browser caches of css/js
 
 UI = {
     "work": T("Work", "作品"),
@@ -148,11 +148,11 @@ def open_badge(cls=""):
 
 
 def portrait(p):
-    return p + (SITE["portrait"] or "assets/img/portrait-placeholder.svg")
+    return p + (SITE["portrait"] or "assets/img/portrait-placeholder.svg") + f"?v={VERSION}"
 
 
 def avatar(p):
-    return p + (SITE["portrait_circle"] or SITE["portrait"] or "assets/img/avatar-placeholder.svg")
+    return p + (SITE["portrait_circle"] or SITE["portrait"] or "assets/img/avatar-placeholder.svg") + f"?v={VERSION}"
 
 
 # ---------- layout ----------
