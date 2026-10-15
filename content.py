@@ -13,6 +13,7 @@ SITE = {
     # If the repo is named  Pavannaidu9031.github.io  this becomes https://pavannaidu9031.github.io/
     "url": "https://pavannaidu9031.github.io/",
     "name": "Pavan Kalyan",
+    "name_zh": "武澄明",    # Chinese name
     "short": "Pavan",
     "email": "pavannaidu9031@gmail.com",
     "linkedin": "https://www.linkedin.com/in/pavankalyan9031",

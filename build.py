@@ -14,7 +14,7 @@ from urllib.parse import urlparse, quote
 from content import SITE, IDENTITY, PROJECTS, ABOUT, T
 
 ROOT = Path(__file__).parent
-VERSION = "5"  # bump to bust browser caches of css/js
+VERSION = "6"  # bump to bust browser caches of css/js
 
 UI = {
     "work": T("Work", "作品"),
@@ -79,6 +79,7 @@ UI = {
     "go_home": T("Back home", "回到首頁"),
     "skip": T("Skip to content", "跳到主要內容"),
     "lang": T("Language", "語言"),
+    "chinese_name": T("Chinese name", "中文名字"),
     "open_menu": T("Open menu", "開啟選單"),
     "in_numbers": T("In numbers", "數字看我"),
     "resume_short": T("Résumé", "履歷"),
@@ -300,11 +301,13 @@ def work_rows(p, projects, numbered=True):
 def build_home():
     p = ""
     name_unit = f'<span class="hero__unit">{e(SITE["name"])}<span class="hero__dash"> — </span></span>'
-    copy = f'<div class="marquee__copy">{name_unit * 4}</div>'
+    if SITE.get("name_zh"):
+        name_unit += f'<span class="hero__unit hero__unit--zh">{e(SITE["name_zh"])}<span class="hero__dash"> — </span></span>'
+    copy = f'<div class="marquee__copy">{name_unit * (2 if SITE.get("name_zh") else 4)}</div>'
     words = IDENTITY["tagline"]
     body = f"""
 <section class="hero" aria-label="Introduction">
-  <h1 class="sr-only">{e(SITE["name"])} — {t(IDENTITY["title"])}, {t(IDENTITY["degree"])}. {t(IDENTITY["based"])} {t(IDENTITY["country"])}</h1>
+  <h1 class="sr-only">{e(SITE["name"])}{" (" + e(SITE["name_zh"]) + ")" if SITE.get("name_zh") else ""} — {t(IDENTITY["title"])}, {t(IDENTITY["degree"])}. {t(IDENTITY["based"])} {t(IDENTITY["country"])}</h1>
   <div class="hero__portrait"><img src="{portrait(p)}" alt="Portrait of {a(SITE['name'])}" width="887" height="1200" fetchpriority="high"></div>
   <div class="hero__badgeWrap"><div class="magnetic"><div class="hero__badge">
     <p class="hero__badgeText" aria-hidden="true">{t(IDENTITY["based"])}<br>{t(IDENTITY["country"])}</p>
@@ -339,7 +342,7 @@ def build_home():
 
 """
     page("", f'{SITE["name"]} — {IDENTITY["title"]["en"]}', IDENTITY["tagline"]["en"], body, "home", light=True,
-         title_zh=f'{SITE["name"]} — {IDENTITY["title"]["zh"]}')
+         title_zh=f'{SITE.get("name_zh", "")} {SITE["name"]} — {IDENTITY["title"]["zh"]}'.strip())
 
 
 def build_work():
@@ -361,7 +364,7 @@ def build_work():
 </section>
 """
     page("work/", f'{UI["work"]["en"]} — {SITE["name"]}', "Research and software projects by " + SITE["name"] + ": fiber-optic hydrogen sensing, thin-film sputtering and the tools that support it.",
-         body, "work", title_zh=f'{UI["work"]["zh"]} — {SITE["name"]}')
+         body, "work", title_zh=f'{UI["work"]["zh"]} — {SITE.get("name_zh") or SITE["name"]}')
 
 
 def build_project(i, pr):
@@ -405,7 +408,7 @@ def build_project(i, pr):
 </article>
 """
     page(f"work/{pr['slug']}/", f'{pr["title"]["en"]} — {SITE["name"]}', pr["summary"]["en"], body, "work",
-         title_zh=f'{pr["title"]["zh"]} — {SITE["name"]}')
+         title_zh=f'{pr["title"]["zh"]} — {SITE.get("name_zh") or SITE["name"]}')
 
 
 def timeline(items):
@@ -420,6 +423,7 @@ def timeline(items):
 
 def build_about():
     p = "../"
+    zhname = f'<p class="about__zhname reveal"><span class="label">{t(UI["chinese_name"])}</span><span class="about__zh">{e(SITE["name_zh"])}</span></p>' if SITE.get("name_zh") else ""
     paras = "".join(f'<p class="reveal"{zh(b)}>{e(b["en"])}</p>' for b in ABOUT["body"])
     skills = ""
     for j, s in enumerate(ABOUT["skills"]):
@@ -436,7 +440,7 @@ def build_about():
 <section class="about">
   <div class="about__divider"><div class="about__globe" data-parallax="-0.08"><span class="hero__globeDisc about__globeDisc">{GLOBE}</span></div></div>
   <div class="about__grid">
-    <div class="about__text"><span class="about__arrow">{ARROW_DOWN}</span>{paras}{resume}</div>
+    <div class="about__text"><span class="about__arrow">{ARROW_DOWN}</span>{zhname}{paras}{resume}</div>
     <div class="about__portrait reveal"><img src="{portrait(p)}" alt="Portrait of {a(SITE['name'])}" width="887" height="1200" loading="lazy"></div>
   </div>
 </section>
@@ -455,7 +459,7 @@ def build_about():
 </section>
 """
     page("about/", f'{UI["about"]["en"]} — {SITE["name"]}', IDENTITY["intro"]["en"], body, "about",
-         title_zh=f'{UI["about"]["zh"]} — {SITE["name"]}')
+         title_zh=f'{UI["about"]["zh"]} — {SITE.get("name_zh") or SITE["name"]}')
 
 
 def field(n, q, name, ph, kind="input", required=False):
@@ -504,7 +508,7 @@ def build_contact():
 </section>
 """
     page("contact/", f'{UI["contact"]["en"]} — {SITE["name"]}', "Get in touch with " + SITE["name"] + " about research collaborations, internships or roles.", body, "contact",
-         title_zh=f'{UI["contact"]["zh"]} — {SITE["name"]}')
+         title_zh=f'{UI["contact"]["zh"]} — {SITE.get("name_zh") or SITE["name"]}')
 
 
 def build_404():
@@ -516,7 +520,7 @@ def build_404():
   {btn("./", t(UI["go_home"]), "round")}
 </section>
 """
-    page("404.html", f'404 — {SITE["name"]}', "Page not found.", body, base=base, title_zh=f'404 — {SITE["name"]}')
+    page("404.html", f'404 — {SITE["name"]}', "Page not found.", body, base=base, title_zh=f'404 — {SITE.get("name_zh") or SITE["name"]}')
 
 
 def build_sitemap():

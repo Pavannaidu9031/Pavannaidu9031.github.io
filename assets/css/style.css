@@ -659,3 +659,8 @@ html[lang="zh-Hant"] .stat__label { max-width: 16em; }
   .row__index { margin-right: 10px; vertical-align: 0.7em; }
   .rows:hover .row__link { opacity: 1; }
 }
+.about__zhname { display: flex; align-items: baseline; gap: 16px; }
+.about__zhname .label { margin: 0; }
+.about__zh { font-family: "Noto Sans TC", var(--font-display); font-size: clamp(26px, 2.4vw, 36px); letter-spacing: 0.08em; }
+.hero__unit--zh { font-family: "Noto Sans TC", var(--font-display); font-size: calc(var(--fs-hero-name) * 0.82); letter-spacing: 0.04em; font-weight: 500; }
+.hero__unit--zh .hero__dash { font-size: calc(1em / 0.82); font-family: var(--font-display); letter-spacing: 0; }
