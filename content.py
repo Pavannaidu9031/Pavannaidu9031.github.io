@@ -161,35 +161,6 @@ PROJECTS = [
         "stack": ["HF etching", "Temperature control", "Optical power measurement"],
         "links": [],
     },
-    {
-        "slug": "maa-restaurant-platform",
-        "title": T("Maa Restaurant Web Platform", "Maa 餐廳網路平台"),
-        "subtitle": T("", ""),
-        "category": T("Full-Stack Development", "全端開發"),
-        "group": "software",
-        "year": "2026",
-        "role": T("Full-stack developer", "全端開發"),
-        "status": T("Live", "已上線"),
-        "color": "#5a2a12",
-        "summary": T(
-            "Customer website, restaurant management system and QR table ordering for my family's restaurant in India.",
-            "為我家在印度的餐廳打造的顧客網站、餐廳管理系統與 QR 碼桌邊點餐。",
-        ),
-        "overview": T(
-            "Customer website, restaurant management system and QR table ordering for my family's restaurant in Puttur, Andhra Pradesh. Guests browse the menu in English or Telugu and order online or from their table; staff see new orders on a live board.",
-            "為我家位於印度安得拉邦普圖爾（Puttur）的餐廳打造的顧客網站、餐廳管理系統與 QR 碼桌邊點餐。客人可用英文或泰盧固語瀏覽菜單，線上或在座位上點餐；店員則在即時訂單看板上接單。",
-        ),
-        "highlights": [
-            T("Bilingual customer site (English / Telugu) with the full menu and photos", "雙語顧客網站（英文／泰盧固語），含完整菜單與照片"),
-            T("QR codes on each table for ordering from the seat", "每張桌子都有 QR 碼，可直接在座位點餐"),
-            T("Online orders flow into a live order board for staff", "線上訂單即時進入店員的訂單看板"),
-            T("Installable as an app on phones", "可安裝在手機上當作 App 使用"),
-        ],
-        "stack": ["Next.js", "Supabase", "Vercel"],
-        "links": [
-            {"label": T("Live site", "線上網站"), "url": "https://maa-restaurant.vercel.app"},
-        ],
-    },
 ]
 
 ABOUT = {

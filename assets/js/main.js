@@ -91,7 +91,7 @@
       clearInterval(timer);
       el.setAttribute("data-done", "");
       setTimeout(function () { doc.classList.remove("hello"); }, 1100);
-    }, 260);
+    }, 480);
   }
 
   /* ---------- menu ---------- */
@@ -133,35 +133,25 @@
     });
   }
 
-  /* ---------- hover preview for work rows ---------- */
-  function preview() {
+  /* ---------- "View" cursor on work rows ---------- */
+  function viewCursor() {
     if (!finePointer) return;
-    var modal = document.querySelector("[data-preview]");
     var cursor = document.querySelector("[data-cursor]");
-    if (!modal || !cursor) return;
-    var slider = modal.querySelector("[data-preview-slider]");
-    var target = { x: 0, y: 0 }, pos = { x: 0, y: 0 }, cpos = { x: 0, y: 0 };
-    var running = false;
+    var links = document.querySelectorAll(".row__link");
+    if (!cursor || !links.length) return;
+    var target = { x: 0, y: 0 }, pos = { x: 0, y: 0 }, running = false;
     function tick() {
-      pos.x += (target.x - pos.x) * 0.12; pos.y += (target.y - pos.y) * 0.12;
-      cpos.x += (target.x - cpos.x) * 0.25; cpos.y += (target.y - cpos.y) * 0.25;
-      modal.style.left = pos.x + "px"; modal.style.top = pos.y + "px";
-      cursor.style.left = cpos.x + "px"; cursor.style.top = cpos.y + "px";
-      if (running) requestAnimationFrame(tick);
+      pos.x += (target.x - pos.x) * 0.25; pos.y += (target.y - pos.y) * 0.25;
+      cursor.style.left = pos.x + "px"; cursor.style.top = pos.y + "px";
+      requestAnimationFrame(tick);
     }
     window.addEventListener("mousemove", function (ev) {
       target.x = ev.clientX; target.y = ev.clientY;
-      if (!running) { running = true; pos.x = cpos.x = target.x; pos.y = cpos.y = target.y; requestAnimationFrame(tick); }
+      if (!running) { running = true; pos.x = target.x; pos.y = target.y; requestAnimationFrame(tick); }
     });
-    document.querySelectorAll("[data-preview-index]").forEach(function (link) {
-      link.addEventListener("mouseenter", function () {
-        var i = Number(link.getAttribute("data-preview-index"));
-        slider.style.transform = "translateY(" + i * -100 + "%)";
-        modal.setAttribute("data-on", ""); cursor.setAttribute("data-on", "");
-      });
-      link.addEventListener("mouseleave", function () {
-        modal.removeAttribute("data-on"); cursor.removeAttribute("data-on");
-      });
+    links.forEach(function (link) {
+      link.addEventListener("mouseenter", function () { cursor.setAttribute("data-on", ""); });
+      link.addEventListener("mouseleave", function () { cursor.removeAttribute("data-on"); });
     });
   }
 
@@ -169,10 +159,8 @@
   function scrollFx() {
     var marquee = document.querySelector("[data-marquee]");
     var burger = document.querySelector("[data-burger]");
-    var rows = document.querySelectorAll("[data-slide]");
     var parallax = document.querySelectorAll("[data-parallax]");
     var cap = document.querySelector("[data-cap]");
-    var gallery = document.querySelector(".gallery");
     var x = 0, dir = -1, lastY = window.scrollY;
 
     function onScroll() {
@@ -181,14 +169,6 @@
       lastY = y;
       if (burger) burger.toggleAttribute("data-show", y > 120);
       var vh = window.innerHeight;
-      if (gallery && !reduce) {
-        var r = gallery.getBoundingClientRect();
-        var prog = (vh - r.top) / (vh + r.height);
-        rows.forEach(function (row) {
-          var d = Number(row.getAttribute("data-slide"));
-          row.style.transform = "translateX(" + d * (prog - 0.5) * 16 + "vw)";
-        });
-      }
       if (!reduce) parallax.forEach(function (el) {
         var r = el.getBoundingClientRect();
         var off = Math.max(-60, Math.min(60, (r.top + r.height / 2 - vh / 2) * Number(el.getAttribute("data-parallax"))));
@@ -234,7 +214,6 @@
     var root = document.querySelector("[data-work]");
     if (!root) return;
     var chips = root.querySelectorAll("[data-filter]");
-    var views = root.querySelectorAll("[data-view]");
     chips.forEach(function (c) {
       c.addEventListener("click", function () {
         var f = c.getAttribute("data-filter");
@@ -244,14 +223,6 @@
         });
       });
     });
-    function setView(v) {
-      root.setAttribute("data-mode", v);
-      views.forEach(function (o) { o.setAttribute("aria-pressed", String(o.getAttribute("data-view") === v)); });
-    }
-    views.forEach(function (b) {
-      b.addEventListener("click", function () { var v = b.getAttribute("data-view"); setView(v); store.set("work-view", v); });
-    });
-    if (store.get("work-view") === "grid") setView("grid");
   }
 
   /* ---------- contact form → email app ---------- */
@@ -294,7 +265,7 @@
     observeReveals();
     menu();
     magnetic();
-    preview();
+    viewCursor();
     scrollFx();
     clock();
     work();

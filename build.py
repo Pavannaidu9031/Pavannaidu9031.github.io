@@ -14,7 +14,7 @@ from urllib.parse import urlparse, quote
 from content import SITE, IDENTITY, PROJECTS, ABOUT, T
 
 ROOT = Path(__file__).parent
-VERSION = "4"  # bump to bust browser caches of css/js
+VERSION = "5"  # bump to bust browser caches of css/js
 
 UI = {
     "work": T("Work", "作品"),
@@ -154,14 +154,6 @@ def avatar(p):
     return p + (SITE["portrait_circle"] or SITE["portrait"] or "assets/img/avatar-placeholder.svg")
 
 
-def cover(p, proj):
-    return f'{p}assets/img/projects/{proj["slug"]}/cover.svg'
-
-
-def detail(p, proj):
-    return f'{p}assets/img/projects/{proj["slug"]}/detail.svg'
-
-
 # ---------- layout ----------
 
 def header(p, active, light):
@@ -289,14 +281,6 @@ def page(path, title, desc, body, active=None, light=False, base=None, title_zh=
 
 # ---------- sections ----------
 
-def preview_modal(p):
-    slides = "".join(
-        f'<div class="preview__slide" style="background:{pr["color"]}"><img src="{cover(p, pr)}" alt="" width="400" height="300" loading="lazy"></div>'
-        for pr in PROJECTS
-    )
-    return f'<div class="preview" aria-hidden="true" data-preview><div class="preview__slider" data-preview-slider>{slides}</div></div>'
-
-
 def work_rows(p, projects, numbered=True):
     rows = ""
     for i, pr in enumerate(projects):
@@ -304,15 +288,10 @@ def work_rows(p, projects, numbered=True):
         sub = f' <span class="row__sub">{t(pr["subtitle"])}</span>' if has(pr["subtitle"]) else ""
         rows += f"""
 <div class="row reveal" data-group="{pr['group']}" data-index="{PROJECTS.index(pr)}">
-  <a class="row__link" href="{href}" data-preview-index="{PROJECTS.index(pr)}">
-    <h3 class="row__title">{t(pr["title"])}{sub}</h3>
+  <a class="row__link" href="{href}">
+    <h3 class="row__title">{f'<span class="row__index">{i + 1:02d}</span>' if numbered else ""}{t(pr["title"])}{sub}</h3>
     <p class="row__meta">{t(pr["category"])}</p>
     <p class="row__year">{pr["year"]}</p>
-  </a>
-  <a class="card" href="{href}">
-    <span class="card__image" style="background:{pr['color']}"><img src="{cover(p, pr)}" alt="{a(pr['title']['en'])}" width="1200" height="900" loading="lazy"></span>
-    <span class="card__title">{f'<span class="card__index">{i + 1:02d}</span>' if numbered else ""}{t(pr["title"])}</span>
-    <span class="card__meta">{t(pr["category"])}<span>{pr["year"]}</span></span>
   </a>
 </div>"""
     return rows
@@ -323,9 +302,6 @@ def build_home():
     name_unit = f'<span class="hero__unit">{e(SITE["name"])}<span class="hero__dash"> — </span></span>'
     copy = f'<div class="marquee__copy">{name_unit * 4}</div>'
     words = IDENTITY["tagline"]
-    tiles1 = "".join(f'<div class="gallery__tile" style="background:{pr["color"]}"><img src="{cover(p, pr)}" alt="" loading="lazy"></div>' for pr in PROJECTS)
-    order2 = [PROJECTS[i % len(PROJECTS)] for i in (2, 3, 0, 1)]
-    tiles2 = "".join(f'<div class="gallery__tile" style="background:{pr["color"]}"><img src="{detail(p, pr)}" alt="" loading="lazy"></div>' for pr in order2)
     body = f"""
 <section class="hero" aria-label="Introduction">
   <h1 class="sr-only">{e(SITE["name"])} — {t(IDENTITY["title"])}, {t(IDENTITY["degree"])}. {t(IDENTITY["based"])} {t(IDENTITY["country"])}</h1>
@@ -359,13 +335,8 @@ def build_home():
     <div class="rows">{work_rows(p, PROJECTS)}</div>
     <div class="recent__more reveal">{btn(p + "work/", t(UI["more_work"]) + f'<sup>{len(PROJECTS)}</sup>', "outline")}</div>
   </div>
-  {preview_modal(p)}
 </section>
 
-<section class="gallery" aria-hidden="true">
-  <div class="gallery__row" data-slide="-1">{tiles1}</div>
-  <div class="gallery__row" data-slide="1">{tiles2}</div>
-</section>
 """
     page("", f'{SITE["name"]} — {IDENTITY["title"]["en"]}', IDENTITY["tagline"]["en"], body, "home", light=True,
          title_zh=f'{SITE["name"]} — {IDENTITY["title"]["zh"]}')
@@ -384,14 +355,9 @@ def build_work():
 <section class="work" data-work>
   <div class="work__bar">
     <div class="chips" role="group" aria-label="Filter">{chips}</div>
-    <div class="views" role="group" aria-label="View">
-      <button type="button" class="view-btn" data-view="list" aria-pressed="true" aria-label="{a(UI['list_view']['en'])}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-      <button type="button" class="view-btn" data-view="grid" aria-pressed="false" aria-label="{a(UI['grid_view']['en'])}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"/><rect x="13.5" y="4" width="6.5" height="6.5"/><rect x="4" y="13.5" width="6.5" height="6.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5"/></svg></button>
-    </div>
   </div>
   <div class="work__heads" aria-hidden="true"><span class="label">{t(UI["project"])}</span><span class="label">{t(UI["category"])}</span><span class="label">{t(UI["year"])}</span></div>
   <div class="rows rows--work" data-rows>{work_rows(p, PROJECTS)}</div>
-  {preview_modal(p)}
 </section>
 """
     page("work/", f'{UI["work"]["en"]} — {SITE["name"]}', "Research and software projects by " + SITE["name"] + ": fiber-optic hydrogen sensing, thin-film sputtering and the tools that support it.",
@@ -415,7 +381,6 @@ def build_project(i, pr):
     {sub}
     <div class="meta reveal">{meta_html}</div>
   </header>
-  <div class="project__cover reveal" style="background:{pr['color']}"><img src="{cover(p, pr)}" alt="{a(pr['title']['en'])} cover illustration" width="1200" height="900" fetchpriority="high"></div>
   <section class="project__body">
     <div class="project__col">
       <h2 class="label">{t(UI["overview"])}</h2>
@@ -429,7 +394,6 @@ def build_project(i, pr):
     <div class="project__col"><h2 class="label">{t(UI["what_i_did"])}</h2></div>
     <ol class="hl">{highlights}</ol>
   </section>
-  <div class="project__detail reveal" style="background:{pr['color']}"><img src="{detail(p, pr)}" alt="" width="1200" height="900" loading="lazy"></div>
   <section class="project__body">
     <div class="project__col"><h2 class="label">{t(UI["tools"])}</h2></div>
     <ul class="stack reveal">{stack}</ul>
@@ -437,7 +401,6 @@ def build_project(i, pr):
   <a class="next" href="{p}work/{nxt['slug']}/">
     <span class="label">{t(UI["next_project"])}</span>
     <span class="next__title">{t(nxt["title"])}</span>
-    <span class="next__image" style="background:{nxt['color']}"><img src="{cover(p, nxt)}" alt="" loading="lazy"></span>
   </a>
 </article>
 """
