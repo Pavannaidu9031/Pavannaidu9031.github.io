@@ -14,7 +14,7 @@ SITE = {
     "url": "https://pavannaidu9031.github.io/",
     "name": "Pavan Kalyan",
     "short": "Pavan",
-    "email": "pavankalyannaidu722@gmail.com",
+    "email": "pavannaidu9031@gmail.com",
     "linkedin": "https://www.linkedin.com/in/pavankalyan9031",
     "github": "https://github.com/Pavannaidu9031",
     "resume": "assets/Pavan-Kalyan-Resume.pdf",
