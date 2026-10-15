@@ -269,6 +269,24 @@
     });
   }
 
+  /* ---------- copy email ---------- */
+  function copyButtons() {
+    document.querySelectorAll("[data-copy]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var label = b.querySelector("span") || b;
+        var text = b.getAttribute("data-copy");
+        function done() {
+          var old = label.textContent;
+          label.textContent = b.getAttribute(doc.lang === "zh-Hant" ? "data-copied-zh" : "data-copied-en");
+          b.setAttribute("data-done", "");
+          setTimeout(function () { label.textContent = old; b.removeAttribute("data-done"); }, 1600);
+        }
+        if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { window.prompt("Email", text); });
+        else window.prompt("Email", text);
+      });
+    });
+  }
+
   function init() {
     preloader();
     var saved = store.get("lang");
@@ -281,6 +299,7 @@
     clock();
     work();
     contact();
+    copyButtons();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

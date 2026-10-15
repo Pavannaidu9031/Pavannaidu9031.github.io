@@ -14,7 +14,7 @@ from urllib.parse import urlparse, quote
 from content import SITE, IDENTITY, PROJECTS, ABOUT, T
 
 ROOT = Path(__file__).parent
-VERSION = "2"  # bump to bust browser caches of css/js
+VERSION = "3"  # bump to bust browser caches of css/js
 
 UI = {
     "work": T("Work", "作品"),
@@ -79,6 +79,10 @@ UI = {
     "skip": T("Skip to content", "跳到主要內容"),
     "lang": T("Language", "語言"),
     "open_menu": T("Open menu", "開啟選單"),
+    "in_numbers": T("In numbers", "數字看我"),
+    "resume_short": T("Résumé", "履歷"),
+    "copy_email": T("Copy email", "複製電子郵件"),
+    "copied": T("Copied!", "已複製！"),
 }
 
 
@@ -135,6 +139,12 @@ ARROW_UP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wi
 GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4.2" ry="10"/><path d="M2 12h20M3.5 7h17M3.5 17h17"/></svg>'
 
 
+def open_badge(cls=""):
+    if not has(IDENTITY.get("open_to")):
+        return ""
+    return f'<p class="open {cls}"><span class="open__dot" aria-hidden="true"></span>{t(IDENTITY["open_to"])}</p>'
+
+
 def portrait(p):
     return p + (SITE["portrait"] or "assets/img/portrait-placeholder.svg")
 
@@ -186,7 +196,7 @@ def header(p, active, light):
     </ul>
     <div class="menu__foot">
       <p class="label">{t(UI["socials"])}</p>
-      <ul class="menu__socials">{"".join(f'<li><a href="{a(u)}"{ext(u)}>{n}</a></li>' for n, u in socials())}</ul>
+      <ul class="menu__socials">{"".join(f'<li><a href="{a(u)}"{ext(u)}>{n}</a></li>' for n, u in socials())}{f'<li><a href="{p}{a(SITE["resume"])}" download>{t(UI["resume_short"])}</a></li>' if SITE["resume"] else ""}</ul>
     </div>
   </div>
 </aside>"""
@@ -198,6 +208,8 @@ def footer(p):
         social_btns = btn("mailto:" + SITE["email"], e(SITE["email"]), "outline-light") + social_btns
     social_btns += btn(SITE["github"], "GitHub", "outline-light", ext(SITE["github"]))
     links = "".join(f'<li><div class="magnetic"><a href="{a(u)}"{ext(u)}>{n}</a></div></li>' for n, u in socials())
+    if SITE["resume"]:
+        links += f'<li><div class="magnetic"><a href="{p}{a(SITE["resume"])}" download>{t(UI["resume_short"])}</a></div></li>'
     return f"""
 <footer class="footer">
   <div class="footer__cap" aria-hidden="true"><div class="footer__capShape" data-cap></div></div>
@@ -324,7 +336,9 @@ def build_home():
   <div class="hero__role">
     <span class="hero__arrow">{ARROW_DOWN}</span>
     <p class="hero__roleText">{"".join(t(l, "span", "hero__roleLine") for l in IDENTITY["title_lines"])}<span class="hero__degree">{t(IDENTITY["degree"])}</span></p>
+    {open_badge("open--hero")}
   </div>
+  {open_badge("open--hero open--heroMobile")}
   <div class="hero__name" aria-hidden="true"><div class="marquee" data-marquee>{copy}{copy}</div></div>
 </section>
 
@@ -435,7 +449,8 @@ def timeline(items):
     for it in items:
         where = t(it["where"], "p", "tl__where") if has(it["where"]) else ""
         when = t(it["when"], "p", "tl__when") if has(it["when"]) else '<p class="tl__when"></p>'
-        out += f'<li class="tl__item reveal"><div>{t(it["what"], "h3", "tl__what")}{where}</div>{when}</li>'
+        notes = t(it["notes"], "p", "tl__notes") if has(it.get("notes")) else ""
+        out += f'<li class="tl__item reveal"><div>{t(it["what"], "h3", "tl__what")}{where}{notes}</div>{when}</li>'
     return f'<ul class="tl">{out}</ul>'
 
 
@@ -447,7 +462,8 @@ def build_about():
         items = "".join(f"<li>{t(x)}</li>" for x in s["items"])
         skills += f'<div class="skill reveal"><span class="skill__n">{j + 1:02d}</span><h3 class="skill__title">{t(s["title"])}</h3><ul>{items}</ul></div>'
     interests = "".join(f'<li>{t(x)}</li>' for x in ABOUT["interests"])
-    resume = f'<div class="about__resume reveal">{btn(p + SITE["resume"], t(UI["resume"]) + " ↓", "round", " download")}</div>' if SITE["resume"] else ""
+    stats = "".join(f'<li class="stat reveal"><span class="stat__value">{e(x["value"])}</span>{t(x["label"], "span", "stat__label")}</li>' for x in ABOUT.get("stats", []))
+    resume = f'<div class="about__resume reveal">{btn(p + SITE["resume"], t(UI["resume_short"]) + " ↓", "round", " download")}</div>' if SITE["resume"] else ""
     body = f"""
 <section class="page-head">
   <h1 class="page-title page-title--about reveal"{zh(ABOUT["headline"])}>{e(ABOUT["headline"]["en"])}</h1>
@@ -458,6 +474,10 @@ def build_about():
     <div class="about__text"><span class="about__arrow">{ARROW_DOWN}</span>{paras}{resume}</div>
     <div class="about__portrait reveal"><img src="{portrait(p)}" alt="Portrait of {a(SITE['name'])}" width="887" height="1200" loading="lazy"></div>
   </div>
+</section>
+<section class="stats" aria-labelledby="stats-heading">
+  <h2 class="label" id="stats-heading">{t(UI["in_numbers"])}</h2>
+  <ul class="stats__grid">{stats}</ul>
 </section>
 <section class="skills">
   <h2 class="section-title reveal">{t(UI["i_can_help"])}</h2>
@@ -487,7 +507,7 @@ def build_contact():
     p = "../"
     details = ""
     if SITE["email"]:
-        details += f'<li><a href="mailto:{a(SITE["email"])}">{e(SITE["email"])}</a></li>'
+        details += f'<li><a href="mailto:{a(SITE["email"])}">{e(SITE["email"])}</a> <button type="button" class="copy" data-copy="{a(SITE["email"])}" data-copied-en="{a(UI["copied"]["en"])}" data-copied-zh="{a(UI["copied"]["zh"])}">{t(UI["copy_email"])}</button></li>'
     if SITE["linkedin"]:
         details += f'<li><a href="{a(SITE["linkedin"])}"{ext(SITE["linkedin"])}>LinkedIn</a></li>'
     details += f'<li><a href="{a(SITE["github"])}"{ext(SITE["github"])}>GitHub</a></li>'
@@ -498,6 +518,7 @@ def build_contact():
 <section class="contact">
   <div class="contact__head">
     <h1 class="page-title"><span class="contact__avatar"><img src="{avatar(p)}" alt="" width="100" height="100"></span>{t(UI["contact_title_1"], "span", "reveal")}<br>{t(UI["contact_title_2"], "span", "reveal")}</h1>
+    {open_badge("open--contact")}
     <span class="contact__arrow">{ARROW_DOWN}</span>
   </div>
   <div class="contact__grid">

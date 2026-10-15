@@ -31,6 +31,9 @@ IDENTITY = {
     "based": T("Based in", "現居"),
     "country": T("Taiwan", "台灣"),
     "location": T("Tainan, Taiwan", "台灣・臺南"),
+    # Short "open to work" badge (hero + contact). Set to T("", "") to hide it.
+    "open_to": T("Open to process & equipment engineering internships · full-time from June 2027",
+                 "尋找製程與設備工程實習・2027 年 6 月起可全職"),
     "tagline": T(
         "I work where materials science, photonics and software meet, building sensors in the lab and the tools that help optimize them.",
         "我在材料科學、光子學與軟體的交會處工作——在實驗室裡打造感測器，也開發協助優化它們的工具。",
@@ -250,11 +253,15 @@ ABOUT = {
             "what": T("MS, Electrical Engineering", "電機工程碩士"),
             "where": T("Southern Taiwan University of Science and Technology", "南臺科技大學"),
             "when": T("2025 – June 2027 (expected)", "2025 – 2027 年 6 月（預計）"),
+            "notes": T("Coursework: Device Physics, Solid-State Electronics, CMOS Technology. Focus on MOSFET operation, short-channel effects, carrier transport and device scaling.",
+                       "修習課程：元件物理、固態電子學、CMOS 技術。著重 MOSFET 運作、短通道效應、載子傳輸與元件微縮。"),
         },
         {
             "what": T("B.Tech, Electronics & Communication Engineering", "電子與通訊工程學士（B.Tech）"),
             "where": T("Sri Venkatesa Perumal College of Engineering and Technology · First Class", "Sri Venkatesa Perumal 工程技術學院・一等學位"),
             "when": T("2019 – 2023", "2019 – 2023"),
+            "notes": T("Coursework: VLSI Design, Digital Electronics, Analog Circuits, Semiconductor Devices.",
+                       "修習課程：VLSI 設計、數位電子學、類比電路、半導體元件。"),
         },
     ],
     "experience": [
@@ -268,6 +275,13 @@ ABOUT = {
             "where": T("Trinite Digital, Pondicherry, India", "Trinite Digital（印度本地治里）"),
             "when": T("2024 – 2025", "2024 – 2025"),
         },
+    ],
+    # "In numbers" strip on the About page
+    "stats": [
+        {"value": "95.9%", "label": T("validation accuracy, wafer defect CNN", "晶圓缺陷 CNN 驗證準確率")},
+        {"value": "72 → 15–20", "label": T("sputtering runs needed with MatrixAI (estimated)", "使用 MatrixAI 後所需濺鍍實驗次數（預估）")},
+        {"value": "~9 µm", "label": T("etched fiber core region for H₂ sensing", "氫氣感測用光纖蝕刻至的纖芯區域")},
+        {"value": "3", "label": T("thin-film materials tracked: WO₃, Pd, ITO", "追蹤的薄膜材料：WO₃、Pd、ITO")},
     ],
     "interests": [
         T("Semiconductor process engineering", "半導體製程工程"),
