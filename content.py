@@ -17,7 +17,7 @@ SITE = {
     "email": "pavankalyannaidu722@gmail.com",
     "linkedin": "https://www.linkedin.com/in/pavankalyan9031",
     "github": "https://github.com/Pavannaidu9031",
-    "resume": "",           # TODO put the PDF in assets/ and write e.g. "assets/Pavan-Kalyan-Resume.pdf"
+    "resume": "assets/Pavan-Kalyan-Resume.pdf",
     "portrait": "assets/img/portrait.webp",  # cut-out made by tools/cutout.py
     "portrait_circle": "assets/img/avatar.webp",
     "timezone": "Asia/Taipei",
@@ -106,19 +106,19 @@ PROJECTS = [
         "slug": "fiber-etching-study",
         "title": T("Fiber Etching Study", "光纖蝕刻研究"),
         "subtitle": T("", ""),
-        "category": T("Research / Conference paper", "研究／研討會論文"),
+        "category": T("Research / Fabrication", "研究／製程"),
         "group": "research",
         "year": "2026",
-        "role": T("Author", "作者"),
-        "status": T("Submitted to CSME 2026", "已投稿 CSME 2026"),  # TODO update when accepted
+        "role": T("Researcher", "研究者"),
+        "status": T("", ""),  # e.g. T("Accepted at CSME 2026", "獲 CSME 2026 接受") once accepted
         "color": "#3b2f4a",
         "summary": T(
             "Temperature-controlled HF etching of optical fiber from 60 to 110 °C, with optical power characterization.",
             "於 60–110 °C 進行溫控式氫氟酸光纖蝕刻，並量測光功率特性。",
         ),
         "overview": T(
-            "Temperature-controlled HF-based etching of optical fiber (60–110 °C) with optical power characterization, the preparation step behind the hydrogen sensor. Submitted to CSME 2026.",
-            "溫控式氫氟酸（HF）光纖蝕刻（60–110 °C），並進行光功率特性量測，是氫氣感測器的前置製程。已投稿至 CSME 2026。",
+            "Temperature-controlled HF-based etching of optical fiber (60–110 °C) with optical power characterization, the preparation step behind the hydrogen sensor.",
+            "溫控式氫氟酸（HF）光纖蝕刻（60–110 °C），並進行光功率特性量測，是氫氣感測器的前置製程。",
         ),
         "highlights": [
             T("HF-based etching with the bath held between 60 and 110 °C", "氫氟酸蝕刻，溶液溫度控制在 60–110 °C"),

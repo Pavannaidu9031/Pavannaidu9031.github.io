@@ -160,7 +160,7 @@ etch_cover = panel(fill="#f3eff6") + """
 <g stroke="#3b2f4a" stroke-width="2"><path d="M600 200 H614 M600 240 H614 M600 280 H614 M600 320 H614 M600 360 H614"/></g>
 """ + label(80, 100, "Fiber etching study", 30) + label(80, 132, "Temperature-controlled HF etching", 18, "#5b6070", weight=400) \
     + label(624, 205, "110 °C", 15, weight=400) + label(624, 365, "60 °C", 15, weight=400) \
-    + label(360, 290, "HF", 18, "#3b2f4a", "middle") + label(80, 520, "CSME 2026 · submitted", 15, "#5b6070", weight=400)
+    + label(360, 290, "HF", 18, "#3b2f4a", "middle") + label(80, 520, "60–110 °C · optical power", 15, "#5b6070", weight=400)
 write("projects/fiber-etching-study/cover.svg", etch_cover)
 
 etch_detail = panel(fill="#f3eff6") + """
