@@ -236,7 +236,7 @@ ABOUT = {
         {
             "what": T("Junior Software Engineer", "初級軟體工程師"),
             "where": T("Trinite Digital, Pondicherry, India", "Trinite Digital（印度本地治里）"),
-            "when": T("", ""),    # TODO years, e.g. "2023 – 2025"
+            "when": T("2024 – 2025", "2024 – 2025"),
         },
     ],
     "interests": [
