@@ -283,6 +283,13 @@ ABOUT = {
         {"value": "~9 µm", "label": T("etched fiber core region for H₂ sensing", "氫氣感測用光纖蝕刻至的纖芯區域")},
         {"value": "3", "label": T("thin-film materials tracked: WO₃, Pd, ITO", "追蹤的薄膜材料：WO₃、Pd、ITO")},
     ],
+    "languages": [
+        T("English", "英文"),
+        T("Telugu", "泰盧固語"),
+        T("Tamil", "泰米爾語"),
+        T("Hindi", "印地語"),
+        T("Chinese (basic)", "中文（基礎）"),
+    ],
     "interests": [
         T("Semiconductor process engineering", "半導體製程工程"),
         T("Deep tech", "深科技"),

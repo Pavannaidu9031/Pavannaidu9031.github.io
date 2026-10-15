@@ -14,7 +14,7 @@ from urllib.parse import urlparse, quote
 from content import SITE, IDENTITY, PROJECTS, ABOUT, T
 
 ROOT = Path(__file__).parent
-VERSION = "3"  # bump to bust browser caches of css/js
+VERSION = "4"  # bump to bust browser caches of css/js
 
 UI = {
     "work": T("Work", "作品"),
@@ -56,6 +56,7 @@ UI = {
     "education": T("Education", "學歷"),
     "experience": T("Experience", "經歷"),
     "interests": T("Interests", "興趣"),
+    "languages": T("Languages", "語言能力"),
     "resume": T("Download résumé", "下載履歷"),
     "contact_title_1": T("Let's start a", "一起開始"),
     "contact_title_2": T("project together", "新的合作"),
@@ -462,6 +463,7 @@ def build_about():
         items = "".join(f"<li>{t(x)}</li>" for x in s["items"])
         skills += f'<div class="skill reveal"><span class="skill__n">{j + 1:02d}</span><h3 class="skill__title">{t(s["title"])}</h3><ul>{items}</ul></div>'
     interests = "".join(f'<li>{t(x)}</li>' for x in ABOUT["interests"])
+    languages = "".join(f'<li>{t(x)}</li>' for x in ABOUT.get("languages", []))
     stats = "".join(f'<li class="stat reveal"><span class="stat__value">{e(x["value"])}</span>{t(x["label"], "span", "stat__label")}</li>' for x in ABOUT.get("stats", []))
     resume = f'<div class="about__resume reveal">{btn(p + SITE["resume"], t(UI["resume_short"]) + " ↓", "round", " download")}</div>' if SITE["resume"] else ""
     body = f"""
@@ -486,7 +488,7 @@ def build_about():
 <section class="cv">
   <div class="cv__block"><h2 class="label">{t(UI["education"])}</h2>{timeline(ABOUT["education"])}</div>
   <div class="cv__block"><h2 class="label">{t(UI["experience"])}</h2>{timeline(ABOUT["experience"])}</div>
-  <div class="cv__block"><h2 class="label">{t(UI["interests"])}</h2><ul class="stack reveal">{interests}</ul></div>
+  <div class="cv__block"><h2 class="label">{t(UI["languages"])}</h2><ul class="stack reveal">{languages}</ul><h2 class="label cv__sub">{t(UI["interests"])}</h2><ul class="stack reveal">{interests}</ul></div>
 </section>
 """
     page("about/", f'{UI["about"]["en"]} — {SITE["name"]}', IDENTITY["intro"]["en"], body, "about",

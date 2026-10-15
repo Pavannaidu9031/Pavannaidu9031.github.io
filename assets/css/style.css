@@ -643,3 +643,4 @@ html[lang="zh-Hant"] .stat__label { max-width: 16em; }
     font-size: 12px; padding: 8px 14px;
   }
 }
+.cv__sub { margin-top: 48px; }
