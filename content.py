@@ -103,6 +103,36 @@ PROJECTS = [
         ],
     },
     {
+        "slug": "wafer-defect-classifier",
+        "title": T("Wafer Defect AI Classifier", "晶圓缺陷 AI 分類器"),
+        "subtitle": T("", ""),
+        "category": T("Deep Learning / Semiconductor", "深度學習／半導體"),
+        "group": "software",
+        "year": "2026",
+        "role": T("Designer & developer", "設計與開發"),
+        "status": T("95.9% validation accuracy", "驗證準確率 95.9%"),
+        "color": "#16324f",
+        "summary": T(
+            "A CNN that sorts semiconductor wafer maps into 8 defect patterns with 95.9% validation accuracy.",
+            "以卷積神經網路（CNN）將半導體晶圓圖分類為 8 種缺陷型態，驗證準確率達 95.9%。",
+        ),
+        "overview": T(
+            "An end-to-end deep learning system for automated yield inspection. A convolutional neural network trained on the WM-811K dataset recognizes 8 failure patterns on wafer maps, such as Scratch, Donut and Edge-Ring, reaching 95.9% accuracy on unseen validation data. Grad-CAM heatmaps show which areas of the wafer drove each decision.",
+            "一套用於自動化良率檢測的端到端深度學習系統。以 WM-811K 資料集訓練的卷積神經網路，可辨識晶圓圖上的 8 種失效型態（例如刮痕 Scratch、甜甜圈 Donut、邊緣環 Edge-Ring），在未見過的驗證資料上準確率達 95.9%。並以 Grad-CAM 熱力圖呈現每次判斷所依據的晶圓區域。",
+        ),
+        "highlights": [
+            T("Cleaned the WM-811K dataset and normalized every wafer map to a 26 × 26 grid", "清理 WM-811K 資料集，並將所有晶圓圖正規化為 26 × 26 網格"),
+            T("Designed and trained a CNN that classifies 8 defect patterns", "設計並訓練可分類 8 種缺陷型態的 CNN"),
+            T("95.9% accuracy on unseen validation data", "在未見過的驗證資料上達到 95.9% 準確率"),
+            T("Grad-CAM heatmaps that make each prediction explainable", "以 Grad-CAM 熱力圖讓每個預測都可被解釋"),
+            T("A simulated production monitor that checks a lot of wafers like a fab dashboard", "模擬產線監控，像晶圓廠儀表板一樣逐批檢查晶圓"),
+        ],
+        "stack": ["Python", "TensorFlow / Keras", "OpenCV", "scikit-learn", "Pandas / NumPy", "Grad-CAM"],
+        "links": [
+            {"label": T("Source code", "原始碼"), "url": "https://github.com/Pavannaidu9031/Wafer-Defect-AI-Classifier"},
+        ],
+    },
+    {
         "slug": "fiber-etching-study",
         "title": T("Fiber Etching Study", "光纖蝕刻研究"),
         "subtitle": T("", ""),

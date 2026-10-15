@@ -227,3 +227,50 @@ for k, (name, n) in enumerate([("New", 2), ("In the kitchen", 3), ("Ready", 1)])
         cols += f'<rect x="{x + 120}" y="{y + 64}" width="64" height="18" rx="9" fill="{["#e5484d", "#e9a23b", "#3aa76d"][k]}"/>'
 maa_detail = panel(fill="#f7efe3") + label(70, 112, "Live order board", 26, "#5a2a12") + cols
 write("projects/maa-restaurant-platform/detail.svg", maa_detail)
+
+
+# ---------- wafer defect classifier ----------
+
+def wafer(cx, cy, r, cell, kind, heat=False):
+    """A 26x26 wafer map. kind: 'edge-ring' or 'center'."""
+    import math
+    out = f'<circle cx="{cx}" cy="{cy}" r="{r + 6}" fill="#dfe4ec"/>'
+    n = 26
+    for i in range(n):
+        for j in range(n):
+            x = (j - n / 2 + 0.5) / (n / 2)
+            y = (i - n / 2 + 0.5) / (n / 2)
+            d = math.hypot(x, y)
+            if d > 0.98:
+                continue
+            if kind == "edge-ring":
+                v = max(0.0, 1 - abs(d - 0.86) / 0.1)
+            else:
+                v = max(0.0, 1 - d / 0.38)
+            px, py = cx + x * r - cell / 2, cy + y * r - cell / 2
+            if heat:
+                col = "#fff4d6" if v < 0.05 else ("#ffb347" if v < 0.5 else "#e5484d")
+                op = 1
+            else:
+                col = "#1f6feb" if v > 0.35 or ((i * 7 + j * 13) % 29 == 0 and v > 0) else "#9fb6d6"
+                op = 1
+            out += f'<rect x="{px:.1f}" y="{py:.1f}" width="{cell - 1}" height="{cell - 1}" fill="{col}" opacity="{op}"/>'
+    return out
+
+
+wafer_cover = panel(fill="#eef2f8") + wafer(300, 330, 190, 15, "edge-ring") + """
+<rect x="530" y="200" width="200" height="250" rx="14" fill="#16324f"/>
+<rect x="550" y="300" width="160" height="10" rx="5" fill="#ffffff33"/><rect x="550" y="300" width="153" height="10" rx="5" fill="#4fd1c5"/>
+<rect x="550" y="356" width="160" height="10" rx="5" fill="#ffffff33"/><rect x="550" y="356" width="10" height="10" rx="5" fill="#4fd1c5"/>
+<rect x="550" y="404" width="160" height="10" rx="5" fill="#ffffff33"/><rect x="550" y="404" width="6" height="10" rx="5" fill="#4fd1c5"/>
+""" + label(80, 100, "Wafer defect classifier", 30) + label(80, 132, "CNN on WM-811K wafer maps", 18, "#5b6070", weight=400) \
+    + label(550, 236, "Prediction", 14, "#ffffffaa", weight=400) + label(550, 268, "Edge-Ring", 22, "#fff") \
+    + label(550, 292, "Edge-Ring", 12, "#ffffffaa", weight=400) + label(550, 348, "Center", 12, "#ffffffaa", weight=400) \
+    + label(550, 396, "Scratch", 12, "#ffffffaa", weight=400)
+write("projects/wafer-defect-classifier/cover.svg", wafer_cover)
+
+wafer_detail = panel(fill="#eef2f8") + wafer(230, 330, 150, 12, "center") + wafer(570, 330, 150, 12, "center", heat=True) \
+    + label(80, 100, "Explainable AI with Grad-CAM", 26) \
+    + label(230, 515, "Wafer map", 16, anchor="middle") + label(570, 515, "Where the model looks", 16, anchor="middle") \
+    + '<path d="M392 330 H408 M402 324 L408 330 L402 336" stroke="#1c1d20" stroke-width="2" fill="none"/>'
+write("projects/wafer-defect-classifier/detail.svg", wafer_detail)
