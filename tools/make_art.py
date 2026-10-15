@@ -28,6 +28,8 @@ def panel(x=40, y=40, w=720, h=520, fill="#f4f1ea"):
 
 
 def label(x, y, text, size=18, fill="#1c1d20", anchor="start", weight=500, opacity=1):
+    # scaled up so text stays readable when the image is shown small (home tiles, phone cards)
+    size = max(round(size * 1.3), 18)
     return f'<text x="{x}" y="{y}" font-size="{size}" fill="{fill}" text-anchor="{anchor}" font-weight="{weight}" opacity="{opacity}">{text}</text>'
 
 
@@ -124,7 +126,7 @@ matrix_cover = window() + """
 <rect x="596" y="318" width="128" height="36" rx="18" fill="#455ce9"/>
 <rect x="230" y="394" width="510" height="146" rx="10" fill="#fff" stroke="#e0e5e3"/>
 """ + label(76, 136, "MatrixAI", 18, "#fff") + label(246, 128, "Suggested next run", 14, "#5b6070", weight=400) \
-    + label(596, 136, "Parameters", 14, "#fff") + label(596, 152, "Power", 12, "#ffffffaa", weight=400) \
+    + label(596, 128, "Parameters", 14, "#fff") + label(596, 152, "Power", 12, "#ffffffaa", weight=400) \
     + label(596, 208, "Pressure", 12, "#ffffffaa", weight=400) + label(596, 264, "Ar flow", 12, "#ffffffaa", weight=400) \
     + label(660, 341, "Suggest", 14, "#fff", "middle") \
     + label(250, 424, "Experiment ledger", 14, "#5b6070", weight=400) \
@@ -152,7 +154,7 @@ etch_cover = panel(fill="#f3eff6") + """
 <circle cx="250" cy="460" r="8" fill="#ff8a65"/>
 <path d="M250 230 V420 Q250 436 266 436 H454 Q470 436 470 420 V230" fill="#ffffffaa" stroke="#3b2f4a" stroke-width="4"/>
 <path d="M254 300 H466 V420 Q466 432 454 432 H266 Q254 432 254 420 Z" fill="#c9b8e6" opacity=".8"/>
-<path d="M360 120 V400" stroke="#7d8db3" stroke-width="10" stroke-linecap="round"/>
+<path d="M360 175 V400" stroke="#7d8db3" stroke-width="10" stroke-linecap="round"/>
 <path d="M360 300 V400" stroke="#7d8db3" stroke-width="4" stroke-linecap="round"/>
 <g stroke="#3b2f4a" stroke-width="3" fill="#fff"><rect x="560" y="160" width="36" height="250" rx="18"/></g>
 <rect x="570" y="250" width="16" height="150" rx="8" fill="#e5484d"/>
@@ -160,7 +162,7 @@ etch_cover = panel(fill="#f3eff6") + """
 <g stroke="#3b2f4a" stroke-width="2"><path d="M600 200 H614 M600 240 H614 M600 280 H614 M600 320 H614 M600 360 H614"/></g>
 """ + label(80, 100, "Fiber etching study", 30) + label(80, 132, "Temperature-controlled HF etching", 18, "#5b6070", weight=400) \
     + label(624, 205, "110 °C", 15, weight=400) + label(624, 365, "60 °C", 15, weight=400) \
-    + label(360, 290, "HF", 18, "#3b2f4a", "middle") + label(80, 520, "60–110 °C · optical power", 15, "#5b6070", weight=400)
+    + label(310, 290, "HF", 18, "#3b2f4a", "middle") + label(80, 520, "60–110 °C · optical power", 15, "#5b6070", weight=400)
 write("projects/fiber-etching-study/cover.svg", etch_cover)
 
 etch_detail = panel(fill="#f3eff6") + """
@@ -258,14 +260,14 @@ def wafer(cx, cy, r, cell, kind, heat=False):
     return out
 
 
-wafer_cover = panel(fill="#eef2f8") + wafer(300, 330, 190, 15, "edge-ring") + """
-<rect x="530" y="200" width="200" height="250" rx="14" fill="#16324f"/>
-<rect x="550" y="300" width="160" height="10" rx="5" fill="#ffffff33"/><rect x="550" y="300" width="153" height="10" rx="5" fill="#4fd1c5"/>
+wafer_cover = panel(fill="#eef2f8") + wafer(290, 360, 160, 12.5, "edge-ring") + """
+<rect x="530" y="196" width="210" height="254" rx="14" fill="#16324f"/>
+<rect x="550" y="312" width="160" height="10" rx="5" fill="#ffffff33"/><rect x="550" y="312" width="153" height="10" rx="5" fill="#4fd1c5"/>
 <rect x="550" y="356" width="160" height="10" rx="5" fill="#ffffff33"/><rect x="550" y="356" width="10" height="10" rx="5" fill="#4fd1c5"/>
 <rect x="550" y="404" width="160" height="10" rx="5" fill="#ffffff33"/><rect x="550" y="404" width="6" height="10" rx="5" fill="#4fd1c5"/>
 """ + label(80, 100, "Wafer defect classifier", 30) + label(80, 132, "CNN on WM-811K wafer maps", 18, "#5b6070", weight=400) \
     + label(550, 236, "Prediction", 14, "#ffffffaa", weight=400) + label(550, 268, "Edge-Ring", 22, "#fff") \
-    + label(550, 292, "Edge-Ring", 12, "#ffffffaa", weight=400) + label(550, 348, "Center", 12, "#ffffffaa", weight=400) \
+    + label(550, 304, "Edge-Ring", 12, "#ffffffaa", weight=400) + label(550, 348, "Center", 12, "#ffffffaa", weight=400) \
     + label(550, 396, "Scratch", 12, "#ffffffaa", weight=400)
 write("projects/wafer-defect-classifier/cover.svg", wafer_cover)
 

@@ -14,7 +14,7 @@ from urllib.parse import urlparse, quote
 from content import SITE, IDENTITY, PROJECTS, ABOUT, T
 
 ROOT = Path(__file__).parent
-VERSION = "1"  # bump to bust browser caches of css/js
+VERSION = "2"  # bump to bust browser caches of css/js
 
 UI = {
     "work": T("Work", "作品"),
