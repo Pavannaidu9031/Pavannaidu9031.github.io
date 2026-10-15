@@ -14,8 +14,8 @@ SITE = {
     "url": "https://pavannaidu9031.github.io/portfolio/",
     "name": "Pavan Kalyan",
     "short": "Pavan",
-    "email": "",            # TODO your email, e.g. "you@example.com" (shown on the site and used by the contact form)
-    "linkedin": "",         # TODO full LinkedIn URL
+    "email": "pavankalyannaidu722@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/pavankalyan9031",
     "github": "https://github.com/Pavannaidu9031",
     "resume": "",           # TODO put the PDF in assets/ and write e.g. "assets/Pavan-Kalyan-Resume.pdf"
     "portrait": "",         # TODO put a cut-out portrait (transparent background) in assets/img/ and write e.g. "assets/img/portrait.webp"
